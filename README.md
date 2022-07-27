@@ -1,6 +1,6 @@
 # egl-docker
 
-A customized docker for headless GPU rendering without host-side configuration. Inspiried by the [orginal repo](https://github.com/ehfd/docker-nvidia-egl-desktop) by [Seungmin Kim](https://github.com/ehfd).
+A customized docker for headless GPU rendering without host-side configuration. Inspiried by the [original repo](https://github.com/ehfd/docker-nvidia-egl-desktop) by [Seungmin Kim](https://github.com/ehfd).
 
 Please note that [MineRL](https://github.com/minerllabs/minerl) is also installed for testing purposes. You may remove that part for good.
 
