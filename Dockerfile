@@ -3,7 +3,7 @@ ARG UBUNTU_RELEASE=20.04
 ARG CUDA_VERSION=11.2.2
 FROM nvcr.io/nvidia/cudagl:${CUDA_VERSION}-runtime-ubuntu${UBUNTU_RELEASE}
 
-LABEL maintainer "https://github.com/ehfd,https://github.com/danisla"
+LABEL maintainer "https://github.com/jeasinema"
 
 ARG UBUNTU_RELEASE
 ARG CUDA_VERSION
