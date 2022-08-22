@@ -123,7 +123,7 @@ RUN if [ "${UBUNTU_RELEASE}" = "18.04" ]; then apt-get update && apt-get install
 
 # Install VirtualGL
 ARG VIRTUALGL_VERSION_MIN=3.0.2
-    RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && \
+RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && \
     if [ "$(echo "${VIRTUALGL_VERSION_MIN}" "${VIRTUALGL_VERSION}" | tr " " "\n" | sort -V | head -n 1)" = "${VIRTUALGL_VERSION_MIN}" ]; then \
     curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
     curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; \
