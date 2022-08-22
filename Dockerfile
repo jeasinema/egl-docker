@@ -122,9 +122,14 @@ RUN if [ "${UBUNTU_RELEASE}" = "18.04" ]; then apt-get update && apt-get install
 }" > /etc/vulkan/icd.d/nvidia_icd.json
 
 # Install VirtualGL
-RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && \
+ARG VIRTUALGL_VERSION_MIN=3.0.2
+    RUN VIRTUALGL_VERSION=$(curl -fsSL "https://api.github.com/repos/VirtualGL/virtualgl/releases/67016359" | jq -r '.tag_name' | sed 's/[^0-9\.\-]*//g') && \
+    if [ "$(echo "${VIRTUALGL_VERSION_MIN}" "${VIRTUALGL_VERSION}" | tr " " "\n" | sort -V | head -n 1)" = "${VIRTUALGL_VERSION_MIN}" ]; then \
     curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
-    curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb && \
+    curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; \
+    else VIRTUALGL_VERSION=${VIRTUALGL_VERSION_MIN} && \
+    curl -fsSL -O https://s3.amazonaws.com/virtualgl-pr/main/linux/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
+    curl -fsSL -O https://s3.amazonaws.com/virtualgl-pr/main/linux/virtualgl32_${VIRTUALGL_VERSION}_amd64.deb; fi &&\
     apt-get update && apt-get install -y --no-install-recommends ./virtualgl_${VIRTUALGL_VERSION}_amd64.deb ./virtualgl32_${VIRTUALGL_VERSION}_amd64.deb && \
     rm virtualgl_${VIRTUALGL_VERSION}_amd64.deb virtualgl32_${VIRTUALGL_VERSION}_amd64.deb && \
     rm -rf /var/lib/apt/lists/* && \
@@ -185,8 +190,8 @@ RUN apt update -y && apt install -y software-properties-common && \
     update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 # MineRL
-RUN pip3 install pyyaml
-RUN pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
+RUN pip3 install pyyaml && \
+    pip3 install git+https://github.com/minerllabs/minerl@v1.0.0
 
 ENV DISPLAY :0
 ENV VGL_REFRESHRATE 60
