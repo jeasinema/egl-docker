@@ -26,12 +26,12 @@ You might see your gpus like:
 EGL device ID: egl0 or egl, DRI device path: /dev/dri/card0
 EGL device ID: egl1, DRI device path: /dev/dri/card1
 ```
-the you can choose a specific GPU device rendering, and verify if GPU rending is working use the following command
+then you can choose a specific GPU device rendering, and verify if GPU rending is working use the following command
 ```bash
 vglrun -d /dev/dri/card1 /opt/VirtualGL/bin/glxspheres64
 vglrun -d egl1 /opt/VirtualGL/bin/glxspheres64
 ```
-If you can something like `OpenGL Renderer: NVIDIA GeForce RTX 3090/PCIe/SSE2` in the output, GPU rendering is working.
+If you can see something like `OpenGL Renderer: NVIDIA GeForce RTX 3090/PCIe/SSE2` in the output, GPU rendering is working.
 
 To run your own application with GPU rendering, prepand commands with `vglrun`.
 ```bash
